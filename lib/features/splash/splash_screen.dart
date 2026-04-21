@@ -1,7 +1,9 @@
+import 'dart:math';
+
+import 'package:doha_graduation_project/core/theme/app_colors.dart';
 import 'package:doha_graduation_project/features/auth/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../core/theme/app_colors.dart';
 
 /// Splash / intro screen — mimics the PDF cover page
 /// Navigates to SignInScreen after 2.5 s
@@ -53,18 +55,48 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F2),
+      backgroundColor: AppColors.background,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // ─── Geometric pattern background ───────────────
-          CustomPaint(painter: _PatternPainter()),
+          // ─── Color-blind friendly gradient background ─────────
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                tileMode: TileMode.clamp,
+                colors: [
+                  Color.fromARGB(255, 255, 255, 255),
+                  Color.fromARGB(255, 219, 219, 219),
+                ],
+              ),
+            ),
+          ),
+
+          // ─── Geometric pattern overlay (optional transparency) ───
+          FadeTransition(
+            opacity: _fade,
+            child: Opacity(
+              opacity: 0.5,
+
+              child: CustomPaint(
+                size: const Size(500, 500),
+                painter: SymbolPatternPainter(),
+              ),
+            ),
+          ),
 
           // ─── Centred logo ───────────────────────────────
           Center(
             child: FadeTransition(
               opacity: _fade,
-              child: const _DohaInstituteLogo(),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 240,
+                height: 120,
+                fit: BoxFit.contain,
+              ),
             ),
           ),
         ],
@@ -73,144 +105,209 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-// ─── Logo ──────────────────────────────────────────────────────────────────
+class SymbolPainter extends CustomPainter {
+  final double t; // 0.0 → small/tight, 1.0+ → large/wide
 
-class _DohaInstituteLogo extends StatelessWidget {
-  const _DohaInstituteLogo();
+  SymbolPainter({this.t = 0.5});
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // 10 Anniversary mark
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _TenMark(),
-            const SizedBox(height: 4),
-            const Text(
-              'ANNIVERSARY',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 9,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 2,
-                color: Color(0xFF9E9E9E),
-              ),
-            ),
-          ],
-        ),
-        Container(
-          width: 1,
-          height: 64,
-          color: const Color(0xFFBDBDBD),
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-        ),
-        // Institute name
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              'DOHA INSTITUTE',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.5,
-                color: Color(0xFF5A1226),
-              ),
-            ),
-            Text(
-              'FOR GRADUATE STUDIES',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 9,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1.2,
-                color: Color(0xFF9E9E9E),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    canvas.translate(center.dx, center.dy);
+
+    final paint = Paint()
+      ..color = const Color.fromARGB(255, 255, 0, 21)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 20
+      ..strokeCap = StrokeCap.round;
+
+    final s = size.width * 0.25 * t;
+
+    /// 🔴 TOP ARM
+    canvas.save();
+    canvas.translate(0, -s * 2);
+    _drawArm(canvas, paint, size);
+    canvas.restore();
+
+    /// 🔴 BOTTOM ARM (flipped)
+    canvas.save();
+    canvas.translate(s, s * 2);
+    canvas.rotate(pi);
+    _drawArm(canvas, paint, size);
+    canvas.restore();
+
+    /// 🔺 LEFT TRIANGLE (rotated 90°)
+    canvas.save();
+    canvas.translate(-s * 2 + 20, s / 2);
+    canvas.rotate(-pi / 2);
+    _drawTriangle(canvas, paint, size);
+    canvas.restore();
+
+    /// 🔺 RIGHT TRIANGLE (rotated 90°)
+    canvas.save();
+    canvas.translate(s * 2 + 30, -s / 2);
+    canvas.rotate(pi / 2);
+    _drawTriangle(canvas, paint, size);
+    canvas.restore();
+  }
+
+  void _drawArm(Canvas canvas, Paint paint, Size size) {
+    final s = size.width * 0.25 * t; // master scale
+
+    Path path = Path();
+
+    // 🔺 Triangle
+    path.moveTo(0, 0);
+    path.lineTo(1.0 * s, 0);
+    path.lineTo(1.2 * s, 0.2 * s);
+    path.lineTo(0.5 * s, 1.0 * s);
+    path.lineTo(-0.2 * s, 0.2 * s);
+    path.close();
+
+    canvas.drawPath(path, paint);
+
+    // 🔁 Curve
+    path = Path();
+
+    path.moveTo(-1.2 * s, 0);
+
+    path.quadraticBezierTo(-0.6 * s, 1.2 * s, 0.5 * s, 1.6 * s);
+
+    path.quadraticBezierTo(1.5 * s, 1.2 * s, 2.2 * s, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  void _drawTriangle(Canvas canvas, Paint paint, Size size) {
+    final s = size.width * 0.25 * t;
+
+    Path path = Path();
+
+    // 🔺 Triangle
+    path.moveTo(0, 0);
+    path.lineTo(1.0 * s, 0);
+    path.lineTo(1.2 * s, 0.2 * s);
+    path.lineTo(0.5 * s, 1.0 * s);
+    path.lineTo(-0.2 * s, 0.2 * s);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant SymbolPainter oldDelegate) {
+    return oldDelegate.t != t;
   }
 }
 
-class _TenMark extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 52,
-      height: 48,
-      child: Stack(
-        children: [
-          // Grey "10"
-          const Text(
-            '10',
-            style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 52,
-              fontWeight: FontWeight.w800,
-              height: 1,
-              color: Color(0xFFCCCCCC),
-            ),
-          ),
-          // Crimson diagonal slash overlay
-          Positioned(
-            right: 0,
-            bottom: 0,
-            child: Container(
-              width: 6,
-              height: 48,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(3),
-              ),
-              transform: Matrix4.rotationZ(-0.3),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+class SymbolPatternPainter extends CustomPainter {
+  final double t;
 
-// ─── Background pattern ─────────────────────────────────────────────────────
+  SymbolPatternPainter({this.t = 0.25});
 
-class _PatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFFDDDDDD).withOpacity(0.5)
-      ..strokeWidth = 1
-      ..style = PaintingStyle.stroke;
+      ..color = const Color.fromARGB(255, 255, 255, 255)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8
+      ..strokeCap = StrokeCap.round;
 
-    const step = 60.0;
-    final rows = (size.height / step).ceil() + 1;
-    final cols = (size.width / step).ceil() + 1;
+    const double tileSize = 140.0;
 
-    for (int r = 0; r < rows; r++) {
-      for (int c = 0; c < cols; c++) {
-        final cx = c * step;
-        final cy = r * step;
-        final half = step / 2;
+    for (double x = 0; x < size.width; x += tileSize) {
+      for (double y = 0; y < size.height; y += tileSize) {
+        canvas.save();
 
-        // Diamond shape
-        final path = Path()
-          ..moveTo(cx, cy - half * 0.4)
-          ..lineTo(cx + half * 0.4, cy)
-          ..lineTo(cx, cy + half * 0.4)
-          ..lineTo(cx - half * 0.4, cy)
-          ..close();
-        canvas.drawPath(path, paint);
+        // move to tile center
+        canvas.translate(x + tileSize / 2, y + tileSize / 2);
+
+        // optional rotation variation for pattern feel
+        canvas.rotate((x + y) % 2 == 0 ? 0 : pi / 2);
+
+        _drawSymbol(canvas, paint, tileSize, size);
+
+        canvas.restore();
       }
     }
   }
 
+  void _drawSymbol(Canvas canvas, Paint paint, double tileSize, Size size) {
+    final s = tileSize * 0.25 * t;
+
+    /// 🔴 TOP ARM
+    canvas.save();
+    canvas.translate(0, -s * 2);
+    _drawArm(canvas, paint, size);
+    canvas.restore();
+
+    /// 🔴 BOTTOM ARM (flipped)
+    canvas.save();
+    canvas.translate(s + 80 * t, s * 2 + 260 * t);
+    canvas.rotate(pi);
+    _drawArm(canvas, paint, size);
+    canvas.restore();
+
+    /// 🔺 LEFT TRIANGLE (rotated 90°)
+    canvas.save();
+    canvas.translate(-s * 2 - 90 * t, s / 2 + 180 * t);
+    canvas.rotate(-pi / 2);
+    _drawTriangle(canvas, paint, size);
+    canvas.restore();
+
+    /// 🔺 RIGHT TRIANGLE (rotated 90°)
+    canvas.save();
+    canvas.translate(s * 2 + 200 * t, -s / 2 + 100 * t);
+    canvas.rotate(pi / 2);
+    _drawTriangle(canvas, paint, size);
+    canvas.restore();
+  }
+
+  void _drawArm(Canvas canvas, Paint paint, Size size) {
+    final s = size.width * 0.25 * t; // master scale
+
+    Path path = Path();
+
+    // 🔺 Triangle
+    path.moveTo(0, 0);
+    path.lineTo(1.0 * s, 0);
+    path.lineTo(1.2 * s, 0.2 * s);
+    path.lineTo(0.5 * s, 1.0 * s);
+    path.lineTo(-0.2 * s, 0.2 * s);
+    path.close();
+
+    canvas.drawPath(path, paint);
+
+    // 🔁 Curve
+    path = Path();
+
+    path.moveTo(-1.2 * s, 0);
+
+    path.quadraticBezierTo(-0.6 * s, 1.2 * s, 0.5 * s, 1.6 * s);
+
+    path.quadraticBezierTo(1.5 * s, 1.2 * s, 2.2 * s, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  void _drawTriangle(Canvas canvas, Paint paint, Size size) {
+    final s = size.width * 0.25 * t;
+
+    Path path = Path();
+
+    // 🔺 Triangle
+    path.moveTo(0, 0);
+    path.lineTo(1.0 * s, 0);
+    path.lineTo(1.2 * s, 0.2 * s);
+    path.lineTo(0.5 * s, 1.0 * s);
+    path.lineTo(-0.2 * s, 0.2 * s);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
   @override
-  bool shouldRepaint(covariant CustomPainter old) => false;
+  bool shouldRepaint(covariant SymbolPatternPainter oldDelegate) {
+    return oldDelegate.t != t;
+  }
 }
