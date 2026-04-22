@@ -1,3 +1,4 @@
+import 'package:doha_graduation_project/shared/designs/background_design.dart';
 import 'package:doha_graduation_project/shared/widgets/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -23,6 +24,7 @@ class DashboardScreen extends StatelessWidget {
           // ─── Body ────────────────────────────────────────
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 _SeatCard(),
@@ -71,103 +73,124 @@ class _SliverHeader extends StatelessWidget {
                 1.0,
               );
 
-          return Stack(
-            fit: StackFit.expand,
-            children: [
-              /// 🌈 Background
-              Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Color(0xFF9B1A2E), AppColors.primaryDark],
+          return ClipRect(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                /// 🌈 Background
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Color(0xFF9B1A2E), AppColors.primaryDark],
+                    ),
+                  ),
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Colors.transparent,
+                          Colors.transparent,
+                          // less visible (left)
+                          Colors.white.withOpacity(0.1), // less visible (left)
+                          Colors.white.withOpacity(0.2), // less visible (left)
+                          Colors.white, // fully visible (right)
+                        ],
+                      ).createShader(bounds);
+                    },
+
+                    child: CustomPaint(painter: SymbolPatternPainter()),
                   ),
                 ),
-                child: CustomPaint(painter: _HeaderPatternPainter()),
-              ),
 
-              /// 👤 BIG HEADER (fade out + slight move up)
-              Positioned.fill(
-                child: Opacity(
-                  opacity: 1 - t,
-                  child: Transform.translate(
-                    offset: Offset(0, -20 * t), // 👈 smooth upward motion
-                    child: Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown, // 👈 prevents overflow
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AppAvatar(
-                              imageUrl: null,
-                              name: 'Ahmed Mohamed',
-                              customSize: 80,
-                              backgroundColor: AppColors.white.withOpacity(0.3),
-                            ),
-                            8.verticalSpace,
-                            const AppText.bodyLg(
-                              'Welcome Ahmed',
-                              color: AppColors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            const AppText.bodySm(
-                              'ahmed@university.edu',
-                              color: Colors.white,
-                            ),
-                            const AppText.labelMd(
-                              'Engineering',
-                              color: AppColors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
+                /// 👤 BIG HEADER (fade out + slight move up)
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 1 - t,
+                    child: Transform.translate(
+                      offset: Offset(0, -20 * t), // 👈 smooth upward motion
+                      child: Center(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown, // 👈 prevents overflow
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              AppAvatar(
+                                imageUrl: null,
+                                name: 'Ahmed Mohamed',
+                                customSize: 80,
+                                backgroundColor: AppColors.white.withOpacity(
+                                  0.3,
+                                ),
+                              ),
+                              8.verticalSpace,
+                              const AppText.bodyLg(
+                                'Welcome Ahmed',
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              const AppText.bodySm(
+                                'ahmed@university.edu',
+                                color: Colors.white,
+                              ),
+                              const AppText.labelMd(
+                                'Engineering',
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              /// 👤 SMALL HEADER (fade in + slide from bottom)
-              Positioned(
-                left: 16,
-                right: 16,
-                bottom: 16,
-                child: Opacity(
-                  opacity: t,
-                  child: Transform.translate(
-                    offset: Offset(0, 20 * (1 - t)), // 👈 slide up
-                    child: Row(
-                      children: [
-                        AppAvatar(
-                          imageUrl: null,
-                          name: 'Ahmed Mohamed',
-                          customSize: 36,
-                          backgroundColor: AppColors.white.withOpacity(0.3),
-                        ),
-                        8.horizontalSpace,
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              AppText.labelSm(
-                                'Welcome Ahmed',
-                                color: AppColors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              AppText.labelSm(
-                                'ahmed@university.edu',
-                                color: Colors.white,
-                              ),
-                            ],
+                /// 👤 SMALL HEADER (fade in + slide from bottom)
+                Positioned(
+                  left: 16,
+                  right: 16,
+                  bottom: 16,
+                  child: Opacity(
+                    opacity: t,
+                    child: Transform.translate(
+                      offset: Offset(0, 20 * (1 - t)), // 👈 slide up
+                      child: Row(
+                        children: [
+                          AppAvatar(
+                            imageUrl: null,
+                            name: 'Ahmed Mohamed',
+                            customSize: 36,
+                            backgroundColor: AppColors.white.withOpacity(0.3),
                           ),
-                        ),
-                      ],
+                          8.horizontalSpace,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                AppText.labelSm(
+                                  'Welcome Ahmed',
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                AppText.labelSm(
+                                  'ahmed@university.edu',
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
@@ -717,38 +740,4 @@ class _InstructionRow extends StatelessWidget {
       ),
     );
   }
-}
-
-// ─── Header background painter ────────────────────────────────────────────────
-
-class _HeaderPatternPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white.withOpacity(0.3)
-      ..strokeWidth = 1
-      ..style = PaintingStyle.stroke;
-
-    const step = 50.0;
-    final cols = (size.width / step).ceil() + 2;
-    final rows = (size.height / step).ceil() + 2;
-
-    for (int r = 0; r < rows; r++) {
-      for (int c = 0; c < cols; c++) {
-        final cx = c * step - 10;
-        final cy = r * step - 10;
-        const half = step * 0.35;
-        final path = Path()
-          ..moveTo(cx, cy - half)
-          ..lineTo(cx + half, cy)
-          ..lineTo(cx, cy + half)
-          ..lineTo(cx - half, cy)
-          ..close();
-        canvas.drawPath(path, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter old) => false;
 }
