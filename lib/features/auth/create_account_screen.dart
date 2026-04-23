@@ -27,16 +27,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   File? _photo;
   bool _isLoading = false;
 
-  static const List<String> _sections = [
-    'Engineering',
-    'Social Sciences',
-    'Humanities',
-    'Business',
-    'Law',
-    'Public Administration',
-    'Conflict Management',
-    'Media Studies',
-  ];
+  static const List<String> _sections = ["Student", "Faculty", "Staff"];
 
   @override
   void dispose() {
@@ -109,31 +100,47 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               Center(
                 child: GestureDetector(
                   onTap: _pickPhoto,
-                  child: Container(
-                    width: 96,
-                    height: 96,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.white,
-                      border: Border.all(
-                        color: AppColors.border,
-                        width: 2,
-                        style: BorderStyle.solid,
+                  child: Stack(
+                    alignment: AlignmentGeometry.bottomRight,
+                    children: [
+                      Container(
+                        width: 96,
+                        height: 96,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.white,
+                          border: Border.all(
+                            color: AppColors.border,
+                            width: 2,
+                            style: BorderStyle.solid,
+                          ),
+                          image: _photo != null
+                              ? DecorationImage(
+                                  image: FileImage(_photo!),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
+                        ),
+                        child: _photo == null
+                            ? const Icon(
+                                Icons.image_outlined,
+                                size: 32,
+                                color: AppColors.grey600,
+                              )
+                            : null,
                       ),
-                      image: _photo != null
-                          ? DecorationImage(
-                              image: FileImage(_photo!),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
-                    ),
-                    child: _photo == null
-                        ? const Icon(
-                            Icons.image_outlined,
-                            size: 32,
-                            color: AppColors.grey600,
-                          )
-                        : null,
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryLight,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.camera_alt_outlined,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -141,23 +148,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               const Center(child: AppText.bodySm('Upload your photo')),
 
               28.verticalSpace,
-
-              // ─── Full Name ────────────────────────────────
-              AppTextField(
-                label: 'Full Name',
-                hint: 'Ahmed Mohamed',
-                controller: _nameCtrl,
-                textCapitalization: TextCapitalization.words,
-                textInputAction: TextInputAction.next,
-                suffixIcon: const Icon(
-                  Icons.person_outline_rounded,
-                  color: AppColors.grey500,
-                  size: 20,
-                ),
-                validator: Validators.name,
-              ),
-
-              16.verticalSpace,
 
               // ─── Email ────────────────────────────────────
               AppTextField(
@@ -199,7 +189,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const AppText.labelLg(
-                    'Your Section',
+                    'Role',
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w500,
                   ),
@@ -207,7 +197,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   DropdownButtonFormField<String>(
                     value: _selectedSection,
                     hint: const AppText.bodyMd(
-                      'Select section',
+                      'Select your role',
                       color: AppColors.textgrey,
                     ),
                     decoration: InputDecoration(
