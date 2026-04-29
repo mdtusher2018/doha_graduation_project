@@ -12,6 +12,7 @@ class ApiEndpoints {
   static const String resendOtp = '/otp/resend-otp';
 
   static const String dashboard = "/all-data";
+  static const String staffDashboard = "/users/scan-qrcode";
 
   static const String baseImageUrl = "http://10.10.10.78:5000";
 }

@@ -2,8 +2,6 @@ import 'package:doha_graduation_project/core/config/flavor_config.dart';
 import 'package:doha_graduation_project/core/di/core_providers.dart';
 import 'package:doha_graduation_project/core/services/storage/local_storage_service_impl.dart';
 import 'package:doha_graduation_project/core/utils/global_keys.dart';
-import 'package:doha_graduation_project/scr/views/screens/dashboard/dashboard_screen.dart';
-import 'package:doha_graduation_project/scr/views/screens/staff_dashboard/staff_dashboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,7 +57,7 @@ class DohaGradApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
       navigatorKey: navigatorKey,
-      home: StaffDashboardPage(),
+      home: SplashScreen(),
     );
   }
 

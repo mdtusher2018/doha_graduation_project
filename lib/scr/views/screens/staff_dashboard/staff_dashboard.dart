@@ -1,18 +1,23 @@
 import 'dart:convert';
 
 import 'package:doha_graduation_project/core/theme/app_colors.dart';
+import 'package:doha_graduation_project/core/utils/extensions/num_ext.dart';
+import 'package:doha_graduation_project/scr/controllers/staff_dash_board_notifier.dart';
+import 'package:doha_graduation_project/scr/views/shared/widgets/app_button.dart';
 import 'package:doha_graduation_project/scr/views/shared/widgets/app_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-class StaffDashboardPage extends StatefulWidget {
+class StaffDashboardPage extends ConsumerStatefulWidget {
   const StaffDashboardPage({super.key});
 
   @override
-  State<StaffDashboardPage> createState() => _StaffDashboardPageState();
+  ConsumerState<StaffDashboardPage> createState() => _StaffDashboardPageState();
 }
 
-class _StaffDashboardPageState extends State<StaffDashboardPage> {
+class _StaffDashboardPageState extends ConsumerState<StaffDashboardPage> {
   final MobileScannerController controller = MobileScannerController();
 
   bool isProcessing = false;
@@ -25,7 +30,7 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
         data = jsonDecode(message);
       }
     } catch (_) {}
-
+    final dashboard = ref.watch(staffDashboardNotifierProvider.notifier);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -80,7 +85,7 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
                 fontWeight: FontWeight.bold,
               ),
 
-              const SizedBox(height: 20),
+              24.verticalSpace,
 
               /// ─── User Info ───────────────────────
               if (data != null) ...[
@@ -90,42 +95,44 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
                   _infoRow("Section", data['section'] ?? "-"),
                 _infoRow("Seat", data['seat'] ?? "-"),
               ] else
-                Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey.shade700),
-                ),
+                AppText.bodyLg(message, textAlign: TextAlign.center),
 
-              const SizedBox(height: 24),
+              24.verticalSpace,
 
               /// ─── Actions ─────────────────────────
               Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
+                    child: AppButton.outline(
                       onPressed: () {
                         Navigator.pop(context);
                         _restartScanner();
                       },
-                      child: const Text("Scan Again"),
+                      label: "Scan Again",
                     ),
                   ),
                   const SizedBox(width: 12),
+
                   Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: notFound ? Colors.red : Colors.green,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _restartScanner();
+                    child: ValueListenableBuilder(
+                      valueListenable: dashboard.isLoading,
+                      builder: (context, value, child) {
+                        return AppButton.primary(
+                          onPressed: () async {
+                            await dashboard.submitPresent();
+
+                            _restartScanner();
+                          },
+                          label: "Done",
+                          isLoading: value,
+                          backgroundColor: notFound ? Colors.red : Colors.green,
+                        );
                       },
-                      child: const Text("Done"),
                     ),
                   ),
                 ],
               ),
+              24.verticalSpace,
             ],
           ),
         );
@@ -222,12 +229,14 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
     return Scaffold(
       backgroundColor: Colors.black,
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _onDetectFake();
-        },
-        child: const Icon(Icons.bug_report),
-      ),
+      floatingActionButton: (kDebugMode)
+          ? FloatingActionButton(
+              onPressed: () {
+                _onDetectFake();
+              },
+              child: const Icon(Icons.bug_report),
+            )
+          : null,
 
       body: Stack(
         children: [
