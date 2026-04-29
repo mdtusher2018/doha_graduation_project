@@ -46,8 +46,10 @@ abstract class BaseNotifier<T> extends StateNotifier<T> {
       final message = _mapErrorToMessage(e);
       errorMessage.value = message;
 
-      // 🔥 NEW: pass raw error too
-      onError?.call(message, e);
+      if (onError != null) {
+        onError.call(message, e);
+        return null;
+      }
 
       if (showErrorSnack) {
         final context = navigatorKey.currentContext;

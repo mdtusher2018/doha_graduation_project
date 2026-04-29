@@ -40,38 +40,6 @@ class EmailNotApprovedDialog extends StatelessWidget {
                 color: AppColors.textSecondary,
               ),
 
-              8.verticalSpace,
-
-              // Contact card (same as before)
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: 8.circular,
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    _ContactRow(
-                      icon: Icons.email_outlined,
-                      label: 'graduation@di.edu.qa',
-                    ),
-                    SizedBox(height: 8),
-                    _ContactRow(
-                      icon: Icons.phone_outlined,
-                      label: '+974 4454 1234',
-                    ),
-                    SizedBox(height: 8),
-                    _ContactRow(
-                      icon: Icons.access_time_outlined,
-                      label: 'Sun – Thu, 8:00 AM – 4:00 PM',
-                    ),
-                  ],
-                ),
-              ),
-
               24.verticalSpace,
 
               AppButton.primary(
@@ -83,24 +51,6 @@ class EmailNotApprovedDialog extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _ContactRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _ContactRow({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: AppColors.grey500),
-        8.horizontalSpace,
-        AppText.bodySm(label, color: AppColors.textSecondary),
-      ],
     );
   }
 }

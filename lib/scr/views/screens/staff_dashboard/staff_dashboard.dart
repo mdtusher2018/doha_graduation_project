@@ -5,7 +5,7 @@ import 'package:doha_graduation_project/core/utils/extensions/num_ext.dart';
 import 'package:doha_graduation_project/scr/controllers/staff_dash_board_notifier.dart';
 import 'package:doha_graduation_project/scr/views/shared/widgets/app_button.dart';
 import 'package:doha_graduation_project/scr/views/shared/widgets/app_text.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -119,7 +119,7 @@ class _StaffDashboardPageState extends ConsumerState<StaffDashboardPage> {
                       builder: (context, value, child) {
                         return AppButton.primary(
                           onPressed: () async {
-                            await dashboard.submitPresent();
+                            await dashboard.submitPresent(data['email'] ?? "-");
 
                             _restartScanner();
                           },
@@ -193,31 +193,6 @@ class _StaffDashboardPageState extends ConsumerState<StaffDashboardPage> {
     });
   }
 
-  void _onDetectFake() {
-    if (isProcessing) return;
-
-    setState(() {
-      isProcessing = true;
-    });
-
-    controller.stop();
-
-    const fakeData = '''
-{
-  "name": "Ahmed Mohamed",
-  "email": "ahmed@test.com",
-
-  "seat": "A12",
-  
-  "status": "absent"
-}
-''';
-
-    Future.delayed(const Duration(milliseconds: 300), () {
-      _showResultDialog(fakeData, notFound: false);
-    });
-  }
-
   @override
   void dispose() {
     controller.dispose();
@@ -228,15 +203,6 @@ class _StaffDashboardPageState extends ConsumerState<StaffDashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-
-      floatingActionButton: (kDebugMode)
-          ? FloatingActionButton(
-              onPressed: () {
-                _onDetectFake();
-              },
-              child: const Icon(Icons.bug_report),
-            )
-          : null,
 
       body: Stack(
         children: [

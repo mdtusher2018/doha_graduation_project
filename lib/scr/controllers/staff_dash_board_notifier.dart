@@ -17,12 +17,12 @@ class StaffDashboardNotifier extends BaseNotifier {
   final Dio dio;
 
   // ─── Fetch Dashboard Data ─────────────────────────
-  Future<bool?> submitPresent() async {
+  Future<bool?> submitPresent(String email) async {
     return safeCall<bool>(
       task: () async {
         final response = await dio.patch(
           ApiEndpoints.staffDashboard,
-          data: {"email": "vebobe1663@hacknapp2.com"},
+          data: {"email": email},
         );
 
         final data = response.data['success'];

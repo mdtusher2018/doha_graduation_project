@@ -292,6 +292,7 @@ class _QrCard extends StatelessWidget {
       "email": user.email,
       "section": user.section,
       "role": user.role,
+      'seat': user.seat,
     };
 
     return jsonEncode(data);

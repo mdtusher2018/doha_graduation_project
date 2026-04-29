@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 import 'package:doha_graduation_project/core/utils/validators.dart';
@@ -65,12 +66,16 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
       phoneNumber: _mobileCtrl.text.trim(),
       image: _photo!,
       onEmailNotApproved: () {
+        log(
+          "====================>>>>>>>>>>>>>>>>>> showing not approve dialog",
+        );
         showDialog(
           context: context,
           barrierDismissible: false,
           builder: (_) => const EmailNotApprovedDialog(),
         );
       },
+      context: context,
     );
 
     if (response != null && mounted) {

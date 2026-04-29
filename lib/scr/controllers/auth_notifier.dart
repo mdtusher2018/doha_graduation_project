@@ -4,10 +4,13 @@ import 'dart:io';
 import 'package:doha_graduation_project/core/base-notifier.dart';
 import 'package:doha_graduation_project/core/services/network/api_endpoints.dart';
 import 'package:doha_graduation_project/core/services/network/dio_client.dart';
+import 'package:doha_graduation_project/core/theme/app_colors.dart';
+import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 
 import 'package:doha_graduation_project/scr/models/otp_response.dart';
 import 'package:doha_graduation_project/scr/models/otp_verified_response.dart';
 import 'package:doha_graduation_project/scr/models/staff_login_response.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:dio/dio.dart';
 
@@ -27,6 +30,7 @@ class AuthNotifier extends BaseNotifier<void> {
     required String phoneNumber,
     required File image,
     required void Function() onEmailNotApproved,
+    required BuildContext context,
   }) async {
     return safeCall<OtpResponse>(
       task: () async {
@@ -35,7 +39,7 @@ class AuthNotifier extends BaseNotifier<void> {
           'phoneNumber': phoneNumber,
 
           // 🔥 IMAGE UPLOAD
-          'image': await MultipartFile.fromFile(
+          'profile': await MultipartFile.fromFile(
             image.path,
             filename: image.path.split('/').last,
           ),
@@ -72,6 +76,12 @@ class AuthNotifier extends BaseNotifier<void> {
 
           if (isNotApproved || isEmailBlocked) {
             onEmailNotApproved();
+          } else {
+            context.showCommonSnackbar(
+              title: "Error",
+              message: message,
+              backgroundColor: AppColors.error,
+            );
           }
         }
       },
