@@ -1,5 +1,6 @@
 import 'package:doha_graduation_project/core/config/flavor_config.dart';
 import 'package:doha_graduation_project/core/di/core_providers.dart';
+import 'package:doha_graduation_project/core/services/notification/notification_service.dart';
 import 'package:doha_graduation_project/core/services/storage/local_storage_service_impl.dart';
 import 'package:doha_graduation_project/core/utils/global_keys.dart';
 import 'package:flutter/foundation.dart';
@@ -26,6 +27,8 @@ Future<void> main() async {
   // Init LocalStorageService (SharedPreferences + SecureStorage) + Hive
   final localStorage = LocalStorageServiceImpl();
   await localStorage.init();
+
+  await NotificationService.init();
 
   if (kDebugMode) {
     /// 🔴 Flutter framework errors

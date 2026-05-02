@@ -1,20 +1,27 @@
+import 'package:doha_graduation_project/core/di/core_providers.dart';
+import 'package:doha_graduation_project/core/services/storage/storage_key.dart';
 import 'package:doha_graduation_project/core/theme/app_colors.dart';
+import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
+
+import 'package:doha_graduation_project/core/utils/helper.dart';
+import 'package:doha_graduation_project/scr/views/screens/dashboard/dashboard_screen.dart';
 
 import 'package:doha_graduation_project/scr/views/screens/splash/role_selection_screen.dart';
 import 'package:doha_graduation_project/scr/views/shared/designs/background_design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Splash / intro screen — mimics the PDF cover page
 /// Navigates to SignInScreen after 2.5 s
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _ctrl;
   late Animation<double> _fade;
@@ -36,12 +43,16 @@ class _SplashScreenState extends State<SplashScreen>
     _fade = CurvedAnimation(parent: _ctrl, curve: Curves.easeIn);
     _ctrl.forward();
 
-    Future.delayed(const Duration(milliseconds: 2500), () {
+    Future.delayed(const Duration(milliseconds: 2500), () async {
       if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const RoleSelectionScreen()),
-        );
+        final token = await ref
+            .read(localStorageProvider)
+            .read(StorageKey.accessToken);
+        if (token != null && decodeJwtPayload(token)['role'] != "staff") {
+          context.navigateTo(DashboardScreen(), clearStack: true);
+        } else {
+          context.navigateTo(const RoleSelectionScreen());
+        }
       }
     });
   }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:doha_graduation_project/core/base-notifier.dart';
 import 'package:doha_graduation_project/core/services/network/api_endpoints.dart';
 import 'package:doha_graduation_project/core/services/network/dio_client.dart';
+import 'package:doha_graduation_project/core/services/notification/notification_service.dart';
 import 'package:doha_graduation_project/core/theme/app_colors.dart';
 import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 
@@ -124,9 +125,10 @@ class AuthNotifier extends BaseNotifier<void> {
   Future<OtpVerificationResponse?> verifyOtp({required String otp}) async {
     return safeCall<OtpVerificationResponse>(
       task: () async {
+        final fcmToken = await NotificationService.messaging.getToken();
         final response = await dio.post(
           ApiEndpoints.verifyOtp,
-          data: {'otp': otp},
+          data: {'otp': otp, "FCMToken": fcmToken},
         );
         return OtpVerificationResponse.fromJson(response.data);
       },

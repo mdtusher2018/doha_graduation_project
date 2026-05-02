@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:doha_graduation_project/core/di/core_providers.dart';
+import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 import 'package:doha_graduation_project/core/utils/helper.dart';
 import 'package:doha_graduation_project/scr/controllers/dash_board_notifier.dart';
 import 'package:doha_graduation_project/scr/models/dashboard_model.dart';
+import 'package:doha_graduation_project/scr/views/screens/splash/role_selection_screen.dart';
+import 'package:doha_graduation_project/scr/views/shared/widgets/app_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:doha_graduation_project/scr/views/shared/designs/background_design.dart';
 import 'package:doha_graduation_project/scr/views/shared/widgets/app_utils.dart';
@@ -74,14 +78,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 }
 
-class _SliverHeader extends StatelessWidget {
+class _SliverHeader extends ConsumerWidget {
   final User user;
   const _SliverHeader({required this.user});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SliverAppBar(
-      expandedHeight: 220,
+      expandedHeight: 250,
       pinned: true,
 
       backgroundColor: AppColors.black,
@@ -164,6 +168,29 @@ class _SliverHeader extends StatelessWidget {
                                 user.section,
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,
+                              ),
+                              SizedBox(
+                                height: 30,
+                                width: 140,
+                                child: AppButton.outline(
+                                  label: "Logout",
+                                  onPressed: () async {
+                                    await ref
+                                        .read(localStorageProvider)
+                                        .clearAll();
+                                    context.navigateTo(
+                                      RoleSelectionScreen(),
+                                      clearStack: true,
+                                    );
+                                  },
+                                  borderRadius: 8.circular,
+                                  textColor: AppColors.white,
+                                  suffixIcon: Icon(
+                                    Icons.logout,
+                                    color: AppColors.white,
+                                  ),
+                                  borderColor: AppColors.white,
+                                ),
                               ),
                             ],
                           ),

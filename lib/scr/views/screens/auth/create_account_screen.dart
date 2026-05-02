@@ -79,12 +79,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
     );
 
     if (response != null && mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => VerifyEmailScreen(email: _emailCtrl.text.trim()),
-        ),
-      );
+      context.navigateTo(VerifyEmailScreen(email: _emailCtrl.text.trim()));
+    
     }
   }
 

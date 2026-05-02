@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:doha_graduation_project/core/di/core_providers.dart';
 import 'package:doha_graduation_project/core/services/storage/storage_key.dart';
+import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 import 'package:doha_graduation_project/scr/controllers/auth_notifier.dart';
 import 'package:doha_graduation_project/scr/views/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
@@ -69,11 +70,7 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
       ref
           .read(localStorageProvider)
           .write(StorageKey.accessToken, response.data.accessToken);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (_) => const DashboardScreen()),
-        (route) => false,
-      );
+      context.navigateTo(const DashboardScreen(), clearStack: true);
     }
   }
 

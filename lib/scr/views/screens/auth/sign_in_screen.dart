@@ -1,5 +1,6 @@
 import 'package:doha_graduation_project/core/di/core_providers.dart';
 import 'package:doha_graduation_project/core/services/storage/storage_key.dart';
+import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 import 'package:doha_graduation_project/core/utils/validators.dart';
 import 'package:doha_graduation_project/scr/controllers/auth_notifier.dart';
 import 'package:doha_graduation_project/scr/views/screens/auth/create_account_screen.dart';
@@ -42,12 +43,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       ref
           .read(localStorageProvider)
           .write(StorageKey.accessToken, response.data.otpToken);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => VerifyEmailScreen(email: _emailCtrl.text.trim()),
-        ),
-      );
+      context.navigateTo(VerifyEmailScreen(email: _emailCtrl.text.trim()));
     }
   }
 
@@ -134,12 +130,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     backgroundColor: AppColors.white,
                     borderColor: AppColors.border,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreateAccountScreen(),
-                        ),
-                      );
+                      context.navigateTo(const CreateAccountScreen());
+                     
                     },
                     prefixIcon: const Icon(
                       Icons.auto_awesome_outlined,

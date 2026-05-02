@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:doha_graduation_project/core/services/network/api_endpoints.dart';
 
 String getFullImagePath(String imagePath) {
@@ -41,5 +43,21 @@ String timeAgo(String timestamp) {
   } else {
     int years = (difference.inDays / 365).floor();
     return '$years ${years == 1 ? 'year' : 'years'} ago';
+  }
+}
+
+Map<String, dynamic> decodeJwtPayload(String token) {
+  try {
+    final parts = token.split('.');
+    if (parts.length != 3) return {};
+
+    final payload = parts[1];
+    final normalized = base64Url.normalize(payload);
+    final payloadBytes = base64Url.decode(normalized);
+    final payloadString = utf8.decode(payloadBytes);
+
+    return json.decode(payloadString) as Map<String, dynamic>;
+  } catch (e) {
+    return {};
   }
 }
