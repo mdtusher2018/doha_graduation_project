@@ -698,7 +698,19 @@ class _IncludedTile extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                child: Image.asset(getFullImagePath(item.image), height: 60),
+                child: Padding(
+                  padding: 12.paddingAll,
+                  child: Image.network(
+                    getFullImagePath(item.image),
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(
+                        Icons.broken_image,
+                        color: AppColors.divider,
+                      );
+                    },
+                  ),
+                ),
               ),
               AppText.bodyXs(
                 item.title,

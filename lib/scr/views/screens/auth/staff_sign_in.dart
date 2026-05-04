@@ -98,7 +98,7 @@ class _SignInScreenState extends ConsumerState<StaffSignInScreen> {
                     textInputAction: TextInputAction.done,
                     suffixIcon: const Icon(
                       Icons.mail_outline_rounded,
-                      color: AppColors.primary,
+                      color: AppColors.grey500,
                       size: 20,
                     ),
                     validator: Validators.email,
@@ -108,14 +108,11 @@ class _SignInScreenState extends ConsumerState<StaffSignInScreen> {
                   24.verticalSpace,
                   AppTextField(
                     controller: _passCtrl,
+                    showPasswordToggle: true,
                     hint: 'Enter your password',
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
-                    suffixIcon: const Icon(
-                      Icons.mail_outline_rounded,
-                      color: AppColors.primary,
-                      size: 20,
-                    ),
+
                     validator: Validators.password,
                     onSubmitted: (_) => _onSignIn(),
                   ),

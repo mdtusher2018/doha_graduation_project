@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:doha_graduation_project/core/di/core_providers.dart';
+import 'package:doha_graduation_project/core/services/storage/storage_key.dart';
 import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 import 'package:doha_graduation_project/core/utils/validators.dart';
 import 'package:doha_graduation_project/scr/controllers/auth_notifier.dart';
@@ -79,8 +81,10 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
     );
 
     if (response != null && mounted) {
+      ref
+          .read(localStorageProvider)
+          .write(StorageKey.accessToken, response.data.otpToken);
       context.navigateTo(VerifyEmailScreen(email: _emailCtrl.text.trim()));
-    
     }
   }
 
