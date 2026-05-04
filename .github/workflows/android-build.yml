@@ -87,7 +87,7 @@ jobs:
       # 🧱 Build debug APK when no signing secrets exist
       - name: Build Debug APK (unsigned fallback)
         if: env.SIGNED == 'false'
-        run: flutter build apk --debug
+        run: flutter build apk
 
       # 📤 Upload debug APK
       - name: Upload Debug APK
