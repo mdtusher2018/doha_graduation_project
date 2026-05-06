@@ -114,7 +114,7 @@ class User {
       id: json?['_id'] ?? '',
       name: json?['name'] ?? '',
       email: json?['email'] ?? '',
-      image: json?['image'] ?? '',
+      image: json?['profile'] ?? '',
       role: json?['role'] ?? '',
       status: json?['status'] ?? '',
       section: json?['section'] ?? '',

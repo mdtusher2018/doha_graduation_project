@@ -91,7 +91,8 @@ class _StaffDashboardPageState extends ConsumerState<StaffDashboardPage> {
               if (data != null) ...[
                 _infoRow("Name", data['name'] ?? "-"),
                 _infoRow("Email", data['email'] ?? "-"),
-                if (data['section'] != null)
+                if (data['section'] != null &&
+                    data['section'].toString().isNotEmpty)
                   _infoRow("Section", data['section'] ?? "-"),
                 _infoRow("Seat", data['seat'] ?? "-"),
               ] else
@@ -132,7 +133,7 @@ class _StaffDashboardPageState extends ConsumerState<StaffDashboardPage> {
                   ),
                 ],
               ),
-              24.verticalSpace,
+              40.verticalSpace,
             ],
           ),
         );

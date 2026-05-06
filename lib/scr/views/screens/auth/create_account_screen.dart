@@ -30,10 +30,10 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _mobileCtrl = TextEditingController();
-  String? _selectedSection;
+  // String? _selectedSection;
   File? _photo;
 
-  static const List<String> _sections = ["Student", "Faculty"];
+  // static const List<String> _sections = ["Student", "Faculty"];
 
   @override
   void dispose() {
@@ -200,62 +200,61 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                 validator: Validators.phone,
               ),
 
-              16.verticalSpace,
+              // 16.verticalSpace,
 
-              // ─── Section dropdown ─────────────────────────
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const AppText.labelLg(
-                    'Role',
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  6.verticalSpace,
-                  DropdownButtonFormField<String>(
-                    value: _selectedSection,
-                    hint: const AppText.bodyMd(
-                      'Select your role',
-                      color: AppColors.textgrey,
-                    ),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: 12.circular,
-                        borderSide: const BorderSide(color: AppColors.border),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: 12.circular,
-                        borderSide: const BorderSide(color: AppColors.border),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: 12.circular,
-                        borderSide: const BorderSide(
-                          color: AppColors.primary,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                    validator: (v) =>
-                        v == null ? 'Please select your section' : null,
-                    onChanged: (v) => setState(() => _selectedSection = v),
-                    items: _sections
-                        .map(
-                          (s) => DropdownMenuItem(
-                            value: s,
-                            child: AppText.bodyMd(s),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ],
-              ),
-
+              // // ─── Section dropdown ─────────────────────────
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     const AppText.labelLg(
+              //       'Role',
+              //       color: AppColors.textPrimary,
+              //       fontWeight: FontWeight.w500,
+              //     ),
+              //     6.verticalSpace,
+              //     DropdownButtonFormField<String>(
+              //       value: _selectedSection,
+              //       hint: const AppText.bodyMd(
+              //         'Select your role',
+              //         color: AppColors.textgrey,
+              //       ),
+              //       decoration: InputDecoration(
+              //         filled: true,
+              //         fillColor: AppColors.white,
+              //         contentPadding: const EdgeInsets.symmetric(
+              //           horizontal: 16,
+              //           vertical: 14,
+              //         ),
+              //         border: OutlineInputBorder(
+              //           borderRadius: 12.circular,
+              //           borderSide: const BorderSide(color: AppColors.border),
+              //         ),
+              //         enabledBorder: OutlineInputBorder(
+              //           borderRadius: 12.circular,
+              //           borderSide: const BorderSide(color: AppColors.border),
+              //         ),
+              //         focusedBorder: OutlineInputBorder(
+              //           borderRadius: 12.circular,
+              //           borderSide: const BorderSide(
+              //             color: AppColors.primary,
+              //             width: 1.5,
+              //           ),
+              //         ),
+              //       ),
+              //       validator: (v) =>
+              //           v == null ? 'Please select your section' : null,
+              //       onChanged: (v) => setState(() => _selectedSection = v),
+              //       items: _sections
+              //           .map(
+              //             (s) => DropdownMenuItem(
+              //               value: s,
+              //               child: AppText.bodyMd(s),
+              //             ),
+              //           )
+              //           .toList(),
+              //     ),
+              //   ],
+              // ),
               36.verticalSpace,
 
               // ─── Continue button ──────────────────────────

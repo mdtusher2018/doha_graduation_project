@@ -20,15 +20,11 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
   final List<_RoleItem> roles = const [
     _RoleItem(
-      title: "Student",
-      subtitle: "Access academic dashboard",
+      title: "Student/Faculty",
+      subtitle: "Easily access your academic or faculty dashboard",
       icon: Icons.school_rounded,
     ),
-    _RoleItem(
-      title: "Faculty",
-      subtitle: "Access Faculty dashboard",
-      icon: Icons.badge_rounded,
-    ),
+
     _RoleItem(
       title: "Staff",
       subtitle: "Administrative access",

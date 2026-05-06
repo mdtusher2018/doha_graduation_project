@@ -391,14 +391,15 @@ class _EventDetailsCard extends StatelessWidget {
 
   String formatDate(DateTime? date) {
     if (date == null) return "N/A";
-    return DateFormat('EEEE, MMM d, yyyy').format(date);
+
+    return DateFormat('EEEE, MMM d, yyyy').format(date.toLocal());
   }
 
   String formatTimeRange(DateTime? start, DateTime? end) {
     if (start == null || end == null) return "N/A";
 
-    final startFormatted = DateFormat('hh:mm a').format(start);
-    final endFormatted = DateFormat('hh:mm a').format(end);
+    final startFormatted = DateFormat('hh:mm a').format(start.toLocal());
+    final endFormatted = DateFormat('hh:mm a').format(end.toLocal());
 
     return "$startFormatted – $endFormatted";
   }
