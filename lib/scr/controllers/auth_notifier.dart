@@ -29,7 +29,7 @@ class AuthNotifier extends BaseNotifier<void> {
   Future<OtpResponse?> signup({
     required String email,
     required String phoneNumber,
-    required File image,
+    required File? image,
     required void Function() onEmailNotApproved,
     required BuildContext context,
   }) async {
@@ -40,10 +40,11 @@ class AuthNotifier extends BaseNotifier<void> {
           'phoneNumber': phoneNumber,
 
           // 🔥 IMAGE UPLOAD
-          'profile': await MultipartFile.fromFile(
-            image.path,
-            filename: image.path.split('/').last,
-          ),
+          if (image != null)
+            'profile': await MultipartFile.fromFile(
+              image.path,
+              filename: image.path.split('/').last,
+            ),
         });
 
         final response = await dio.patch(

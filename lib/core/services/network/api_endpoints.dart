@@ -13,6 +13,7 @@ class ApiEndpoints {
 
   static const String dashboard = "/all-data";
   static const String staffDashboard = "/users/scan-qrcode";
+  static const String updateMyProfile = "/users/update-my-profile";
 
-  static const String baseImageUrl = "http://10.10.10.78:5000";
+  static const String baseImageUrl = "http://72.244.153.29:5071";
 }

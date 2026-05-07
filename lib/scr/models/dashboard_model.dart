@@ -92,7 +92,8 @@ class User {
   final String id;
   final String name;
   final String email;
-  final String image;
+  final String? phoneNumber;
+  final String? image;
   final String role;
   final String status;
   final String section;
@@ -102,6 +103,7 @@ class User {
     required this.id,
     required this.name,
     required this.email,
+    required this.phoneNumber,
     required this.image,
     required this.role,
     required this.status,
@@ -114,6 +116,7 @@ class User {
       id: json?['_id'] ?? '',
       name: json?['name'] ?? '',
       email: json?['email'] ?? '',
+      phoneNumber: json?['phoneNumber'] ?? '',
       image: json?['profile'] ?? '',
       role: json?['role'] ?? '',
       status: json?['status'] ?? '',

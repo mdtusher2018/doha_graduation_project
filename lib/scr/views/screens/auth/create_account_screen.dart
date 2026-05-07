@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:doha_graduation_project/core/di/core_providers.dart';
 import 'package:doha_graduation_project/core/services/storage/storage_key.dart';
@@ -53,24 +52,14 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
   Future<void> _onContinue() async {
     if (!_formKey.currentState!.validate()) return;
-    if (_photo == null) {
-      context.showCommonSnackbar(
-        title: "Validation Error",
-        message: "Please upload your image",
-        backgroundColor: AppColors.error,
-      );
-    }
 
     final authNotifier = ref.read(authNotifierProvider.notifier);
 
     final response = await authNotifier.signup(
       email: _emailCtrl.text.trim(),
       phoneNumber: _mobileCtrl.text.trim(),
-      image: _photo!,
+      image: _photo,
       onEmailNotApproved: () {
-        log(
-          "====================>>>>>>>>>>>>>>>>>> showing not approve dialog",
-        );
         showDialog(
           context: context,
           barrierDismissible: false,

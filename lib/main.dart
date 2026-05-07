@@ -17,8 +17,8 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FlavorConfig.initialize(
-    baseUrl: 'http://10.10.10.78:5000/api/v1',
-    socketUrl: 'http://10.10.10.78:5000',
+    baseUrl: 'http://72.244.153.29:5071/api/v1',
+    socketUrl: 'http://72.244.153.29:5071',
     googleMapsApiKey: 'YOUR_KEY',
     agoraAppId: '87317ef9a331453ca1463797ba82cd41',
     stripePublishableKey: 'STRIPE_KEY',

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:doha_graduation_project/core/di/core_providers.dart';
 import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
@@ -7,6 +8,8 @@ import 'package:doha_graduation_project/scr/controllers/dash_board_notifier.dart
 import 'package:doha_graduation_project/scr/models/dashboard_model.dart';
 import 'package:doha_graduation_project/scr/views/screens/splash/role_selection_screen.dart';
 import 'package:doha_graduation_project/scr/views/shared/widgets/app_button.dart';
+import 'package:doha_graduation_project/scr/views/shared/widgets/app_text_field.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:doha_graduation_project/scr/views/shared/designs/background_design.dart';
 import 'package:doha_graduation_project/scr/views/shared/widgets/app_utils.dart';
@@ -235,6 +238,22 @@ class _SliverHeader extends ConsumerWidget {
                               ],
                             ),
                           ),
+                          GestureDetector(
+                            onTap: () =>
+                                _showEditProfileDialog(context, ref, user),
+                            child: Container(
+                              padding: 8.paddingAll,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 1,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              child: Icon(Icons.edit, color: AppColors.white),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -245,6 +264,205 @@ class _SliverHeader extends ConsumerWidget {
           );
         },
       ),
+    );
+  }
+
+  void _showEditProfileDialog(BuildContext context, WidgetRef ref, User user) {
+    final phoneController = TextEditingController(text: user.phoneNumber ?? '');
+
+    File? selectedImage;
+
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            Future<void> pickPhoto() async {
+              final picker = ImagePicker();
+
+              final picked = await picker.pickImage(
+                source: ImageSource.gallery,
+                imageQuality: 70,
+              );
+
+              if (picked != null) {
+                setModalState(() {
+                  selectedImage = File(picked.path);
+                });
+              }
+            }
+
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      /// HEADER
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.edit,
+                              color: AppColors.primary,
+                            ),
+                          ),
+
+                          12.horizontalSpace,
+
+                          const Expanded(
+                            child: AppText.h4(
+                              "Edit Profile",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(Icons.close),
+                          ),
+                        ],
+                      ),
+
+                      24.verticalSpace,
+
+                      /// PROFILE IMAGE
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 45,
+                            backgroundColor: AppColors.primary.withOpacity(0.1),
+                            backgroundImage: selectedImage != null
+                                ? FileImage(selectedImage!)
+                                : (user.image != null && user.image!.isNotEmpty)
+                                ? NetworkImage(user.image!)
+                                : null,
+                            child:
+                                selectedImage == null &&
+                                    (user.image == null || user.image!.isEmpty)
+                                ? Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: AppColors.primary,
+                                  )
+                                : null,
+                          ),
+
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: pickPhoto,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  size: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      24.verticalSpace,
+
+                      /// PHONE FIELD
+                      AppTextField(
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
+                        label: "Phone Number",
+                      ),
+
+                      28.verticalSpace,
+
+                      /// BUTTONS
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AppButton.outline(
+                              label: "Cancel",
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              borderRadius: 14.circular,
+                            ),
+                          ),
+
+                          12.horizontalSpace,
+
+                          Expanded(
+                            child: ValueListenableBuilder(
+                              valueListenable: ref
+                                  .read(dashboardNotifierProvider.notifier)
+                                  .isLoading,
+                              builder: (context, isLoading, child) {
+                                return AppButton(
+                                  label: "Save Changes",
+                                  borderRadius: 14.circular,
+                                  isLoading: isLoading,
+                                  onPressed: () async {
+                                    final updatedPhone = phoneController.text
+                                        .trim();
+
+                                    await ref
+                                        .read(
+                                          dashboardNotifierProvider.notifier,
+                                        )
+                                        .updateProfile(
+                                          context: context,
+                                          phoneNumber: updatedPhone,
+                                          image: selectedImage,
+                                        );
+
+                                    if (context.mounted) {
+                                      Navigator.pop(context);
+                                      context.showCommonSnackbar(
+                                        title: "Success",
+                                        message: "Profile updated successfully",
+                                      );
+                                      ref
+                                          .read(
+                                            dashboardNotifierProvider.notifier,
+                                          )
+                                          .fetchDashboard();
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

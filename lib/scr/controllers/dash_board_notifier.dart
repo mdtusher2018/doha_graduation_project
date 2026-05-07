@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:doha_graduation_project/scr/models/dashboard_model.dart';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../core/base-notifier.dart';
@@ -33,6 +36,31 @@ class DashboardNotifier extends BaseNotifier<DashboardResponse?> {
       },
 
       showSuccessSnack: false, // usually no need for success toast
+    );
+  }
+
+  Future<void> updateProfile({
+    required String phoneNumber,
+    File? image,
+    required BuildContext context,
+  }) async {
+    return safeCall(
+      task: () async {
+        final formData = FormData.fromMap({
+          'phoneNumber': phoneNumber,
+          if (image != null)
+            'profile': await MultipartFile.fromFile(
+              image.path,
+              filename: image.path.split('/').last,
+            ),
+        });
+
+        await dio.patch(
+          ApiEndpoints.updateMyProfile,
+          data: formData,
+          options: Options(contentType: 'multipart/form-data'),
+        );
+      },
     );
   }
 }
