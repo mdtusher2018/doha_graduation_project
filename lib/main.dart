@@ -56,11 +56,12 @@ Future<void> main() async {
   );
 }
 
-class DohaGradApp extends StatelessWidget {
+class DohaGradApp extends ConsumerWidget {
   const DohaGradApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider); // 👈 watch locale
     return MaterialApp(
       title: 'Doha Institute Graduation',
       debugShowCheckedModeBanner: false,
@@ -68,6 +69,8 @@ class DohaGradApp extends StatelessWidget {
       navigatorKey: navigatorKey,
 
       // ── Localization ──────────────────────────────────────────────
+      locale: locale,
+
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -79,7 +82,6 @@ class DohaGradApp extends StatelessWidget {
         Locale('ar'), // Arabic
       ],
 
-      locale: const Locale('ar'), // uncomment to force Arabic for testing
       home: SplashScreen(),
     );
   }

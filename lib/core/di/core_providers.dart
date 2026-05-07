@@ -3,10 +3,11 @@ import 'package:doha_graduation_project/core/services/network/interceptors/auth_
 import 'package:doha_graduation_project/core/services/network/interceptors/refresh_token_interceptor.dart';
 import 'package:doha_graduation_project/core/services/storage/local_storage_service.dart';
 import 'package:doha_graduation_project/core/services/storage/local_storage_service_impl.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'core_providers.g.dart';
-
 
 @riverpod
 AuthInterceptor authInterceptor(Ref ref) {
@@ -26,3 +27,5 @@ LocalStorageService localStorage(Ref ref) {
   final local = LocalStorageServiceImpl();
   return local;
 }
+
+final localeProvider = StateProvider<Locale>((ref) => const Locale('en'));

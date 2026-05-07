@@ -241,6 +241,34 @@ class _SliverHeader extends ConsumerWidget {
                             ),
                           ),
                           GestureDetector(
+                            onTap: () async {
+                              final currentLocale = ref.read(localeProvider);
+                              final isArabic =
+                                  currentLocale.languageCode == 'ar';
+
+                              ref.read(localeProvider.notifier).state = isArabic
+                                  ? const Locale('en')
+                                  : const Locale('ar');
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(right: 8),
+                              padding: 8.paddingAll,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 1,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.language,
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ),
+                          8.verticalSpace,
+                          GestureDetector(
                             onTap: () =>
                                 _showEditProfileDialog(context, ref, user),
                             child: Container(
