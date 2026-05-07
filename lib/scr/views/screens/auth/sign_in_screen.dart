@@ -80,10 +80,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   ),
 
                   20.verticalSpace,
-                  AppText.h2('Sign In'),
+                  AppText.h2(context.l10n.signIn),
                   6.verticalSpace,
                   AppText.bodyMd(
-                    'Access your graduation dashboard',
+                    context.l10n.accessGraduationDashboard,
                     color: AppColors.textPrimary,
                     textAlign: TextAlign.center,
                   ),
@@ -92,7 +92,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
                   AppTextField(
                     controller: _emailCtrl,
-                    hint: 'ahmed@university.edu',
+                    hint: context.l10n.emailHint,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     suffixIcon: const Icon(
@@ -111,7 +111,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     valueListenable: authNotifier.isLoading,
                     builder: (context, isLoading, _) {
                       return AppButton.primary(
-                        label: 'Sign In',
+                        label: context.l10n.signIn,
                         onPressed: _onSignIn,
                         isLoading: isLoading,
                         borderRadius: 50.circular,
@@ -121,17 +121,16 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
                   16.verticalSpace,
 
-                  const AppDividerWithLabel("Don't have an account?"),
+                  AppDividerWithLabel(context.l10n.dontHaveAccount),
 
                   16.verticalSpace,
 
                   AppButton.outline(
-                    label: 'Create New Account',
+                    label: context.l10n.createNewAccount,
                     backgroundColor: AppColors.white,
                     borderColor: AppColors.border,
                     onPressed: () {
                       context.navigateTo(const CreateAccountScreen());
-                     
                     },
                     prefixIcon: const Icon(
                       Icons.auto_awesome_outlined,

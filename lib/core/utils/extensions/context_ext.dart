@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:doha_graduation_project/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 extension NavigationExtensions on BuildContext {
@@ -54,4 +55,8 @@ extension SnackbarExtensions on BuildContext {
       messageColor: textColor,
     ).show(this);
   }
+}
+
+extension LocalizationExt on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this);
 }

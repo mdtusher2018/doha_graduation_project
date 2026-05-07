@@ -1,3 +1,4 @@
+import 'package:doha_graduation_project/core/utils/extensions/context_ext.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/extensions/num_ext.dart';
@@ -27,15 +28,15 @@ class EmailNotApprovedDialog extends StatelessWidget {
 
               24.verticalSpace,
 
-              const AppText.h2(
-                'Email not approved',
+              AppText.h2(
+                context.l10n.emailNotApproved,
                 textAlign: TextAlign.center,
               ),
 
               12.verticalSpace,
 
-              const AppText.bodyMd(
-                'Your email is not in the approved list.\nPlease contact the administration.',
+              AppText.bodyMd(
+                context.l10n.emailNotApprovedMessage,
                 textAlign: TextAlign.center,
                 color: AppColors.textSecondary,
               ),
@@ -43,7 +44,7 @@ class EmailNotApprovedDialog extends StatelessWidget {
               24.verticalSpace,
 
               AppButton.primary(
-                label: 'Close',
+                label: context.l10n.closeButton,
                 onPressed: () => Navigator.of(context).pop(),
                 borderRadius: 50.circular,
               ),

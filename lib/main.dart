@@ -1,8 +1,10 @@
 import 'package:doha_graduation_project/core/config/flavor_config.dart';
 import 'package:doha_graduation_project/core/di/core_providers.dart';
+import 'package:doha_graduation_project/core/l10n/app_localizations.dart';
 import 'package:doha_graduation_project/core/services/notification/notification_service.dart';
 import 'package:doha_graduation_project/core/services/storage/local_storage_service_impl.dart';
 import 'package:doha_graduation_project/core/utils/global_keys.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,6 +66,20 @@ class DohaGradApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
       navigatorKey: navigatorKey,
+
+      // ── Localization ──────────────────────────────────────────────
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // English
+        Locale('ar'), // Arabic
+      ],
+
+      locale: const Locale('ar'), // uncomment to force Arabic for testing
       home: SplashScreen(),
     );
   }

@@ -1,0 +1,131 @@
+{
+  "@@locale": "ar",
+
+  "appTitle": "تخرج معهد الدوحة",
+
+  "chooseYourRole": "اختر دورك",
+
+  "selectRoleSubtitle": "حدد كيف تريد استخدام المنصة",
+
+  "student": "طالب",
+
+  "faculty": "أعضاء هيئة التدريس",
+
+  "staff": "موظف",
+
+  "studentFaculty": "طالب / هيئة تدريس",
+
+  "administrativeAccess": "وصول إداري",
+
+  "easilyAccessDashboard": "الوصول بسهولة إلى لوحة التحكم الأكاديمية أو الخاصة بأعضاء هيئة التدريس",
+
+  "pleaseSelectRole": "يرجى تحديد دورك",
+
+  "continueButton": "متابعة",
+
+  "signIn": "تسجيل الدخول",
+
+  "createAccount": "إنشاء حساب",
+
+  "createNewAccount": "إنشاء حساب جديد",
+
+  "alreadyRegistered": "مسجل مسبقًا",
+
+  "accessGraduationDashboard": "الوصول إلى لوحة تحكم التخرج",
+
+  "email": "البريد الإلكتروني",
+
+  "emailHint": "ahmed@university.edu",
+
+  "emailHelperText": "✦  يُقبل فقط البريد الإلكتروني الجامعي المعتمد",
+
+  "mobile": "الجوال",
+
+  "mobileHint": "+974 5555 1234",
+
+  "uploadPhoto": "رفع صورتك",
+
+  "continueToVerify": "متابعة للتحقق",
+
+  "checkYourEmail": "تحقق من بريدك الإلكتروني",
+
+  "weSentCodeTo": "لقد أرسلنا رمزًا مكوّنًا من 6 أرقام إلى",
+
+  "verifyAndContinue": "التحقق والمتابعة",
+
+  "resendCode": "إعادة إرسال الرمز",
+
+  "codeExpiresIn": "ينتهي الرمز خلال  ",
+
+  "importantInstructions": "تعليمات مهمة",
+
+  "emailNotApproved": "البريد الإلكتروني غير معتمد",
+
+  "emailNotApprovedMessage": "بريدك الإلكتروني غير موجود في القائمة المعتمدة.\nيرجى التواصل مع الإدارة.",
+
+  "welcomeUser": "مرحبًا {name}",
+
+  "yourQrCode": "رمز QR الخاص بك",
+
+  "showQrAtEntrance": "أظهر رمز QR هذا عند مدخل القاعة لتسجيل الدخول الفوري",
+
+  "yourSeatAssignment": "تعيين مقعدك",
+
+  "seat": "المقعد",
+
+  "section": "القسم",
+
+  "name": "الاسم",
+
+  "phoneNumber": "رقم الهاتف",
+
+  "whatsIncluded": "ما المتضمَّن",
+
+  "eventDetails": "تفاصيل الفعالية",
+
+  "editProfile": "تعديل الملف الشخصي",
+
+  "saveChanges": "حفظ التغييرات",
+
+  "cancel": "إلغاء",
+
+  "logout": "تسجيل الخروج",
+
+  "done": "تم",
+
+  "success": "نجاح",
+
+  "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
+
+  "scanQrCode": "مسح رمز QR",
+
+  "alignQrCode": "ضع رمز QR داخل الإطار للمسح",
+
+  "scanAgain": "مسح مرة أخرى",
+
+  "invalidQrCode": "رمز QR غير صالح",
+
+  "noValidQrData": "لم يتم العثور على بيانات QR صالحة.",
+
+  "validationError": "خطأ في التحقق",
+
+  "openInMaps": "فتح في الخرائط",
+
+  "selectYourRole": "حدد دورك",
+
+  "pleaseSelectSection": "يرجى تحديد قسمك",
+
+  "enterYourPassword": "أدخل كلمة المرور",
+
+  "dontHaveAccount": "ليس لديك حساب؟",
+
+  "na": "غير متاح",
+
+  "closeButton": "إغلاق",
+
+  "confirmed": "تم التأكيد",
+
+  "announcements": "الإعلانات"
+
+
+}

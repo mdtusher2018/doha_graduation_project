@@ -1,0 +1,202 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Doha Institute Graduation",
+  "@appTitle": { "description": "App title" },
+
+  "chooseYourRole": "Choose Your Role",
+  "@chooseYourRole": { "description": "Role selection screen title" },
+
+  "selectRoleSubtitle": "Select how you want to use the platform",
+  "@selectRoleSubtitle": { "description": "Role selection screen subtitle" },
+
+  "student": "Student",
+  "@student": { "description": "Student role" },
+
+  "faculty": "Faculty",
+  "@faculty": { "description": "Faculty role" },
+
+  "staff": "Staff",
+  "@staff": { "description": "Staff role" },
+
+  "studentFaculty": "Student/Faculty",
+  "@studentFaculty": { "description": "Student or Faculty label" },
+
+  "administrativeAccess": "Administrative access",
+  "@administrativeAccess": { "description": "Admin access label" },
+
+  "easilyAccessDashboard": "Easily access your academic or faculty dashboard",
+  "@easilyAccessDashboard": { "description": "Role selection description" },
+
+  "pleaseSelectRole": "Please select your role",
+  "@pleaseSelectRole": { "description": "Role selection validation" },
+
+  "continueButton": "Continue",
+  "@continueButton": { "description": "Continue button label" },
+
+  "signIn": "Sign In",
+  "@signIn": { "description": "Sign in button/title" },
+
+  "createAccount": "Create Account",
+  "@createAccount": { "description": "Create account button/title" },
+
+  "createNewAccount": "Create New Account",
+  "@createNewAccount": { "description": "Create new account title" },
+
+  "alreadyRegistered": "Already Registered",
+  "@alreadyRegistered": { "description": "Already registered label" },
+
+  "accessGraduationDashboard": "Access your graduation dashboard",
+  "@accessGraduationDashboard": { "description": "Sign in subtitle" },
+
+  "email": "Email",
+  "@email": { "description": "Email label" },
+
+  "emailHint": "ahmed@university.edu",
+  "@emailHint": { "description": "Email hint text" },
+
+  "emailHelperText": "✦  Only approved university emails accepted",
+  "@emailHelperText": { "description": "Email helper text" },
+
+  "mobile": "Mobile",
+  "@mobile": { "description": "Mobile number label" },
+
+  "mobileHint": "+974 5555 1234",
+  "@mobileHint": { "description": "Mobile hint text" },
+
+  "uploadPhoto": "Upload your photo",
+  "@uploadPhoto": { "description": "Photo upload label" },
+
+  "continueToVerify": "Continue to Verify",
+  "@continueToVerify": { "description": "Continue to verify button" },
+
+  "checkYourEmail": "Check Your Email",
+  "@checkYourEmail": { "description": "Verify email screen title" },
+
+  "weSentCodeTo": "We've sent a 6-digit code to",
+  "@weSentCodeTo": { "description": "OTP sent message" },
+
+  "verifyAndContinue": "Verify & Continue",
+  "@verifyAndContinue": { "description": "Verify and continue button" },
+
+  "resendCode": "Resend Code",
+  "@resendCode": { "description": "Resend OTP button" },
+
+  "codeExpiresIn": "Code expires in  ",
+  "@codeExpiresIn": { "description": "OTP countdown prefix" },
+
+  "importantInstructions": "Important Instructions",
+  "@importantInstructions": { "description": "Important instructions label" },
+
+  "emailNotApproved": "Email not approved",
+  "@emailNotApproved": { "description": "Email not approved title" },
+
+  "emailNotApprovedMessage": "Your email is not in the approved list.\nPlease contact the administration.",
+  "@emailNotApprovedMessage": { "description": "Email not approved message" },
+
+  "welcomeUser": "Welcome {name}",
+  "@welcomeUser": {
+    "description": "Welcome message",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "yourQrCode": "Your QR Code",
+  "@yourQrCode": { "description": "QR code section title" },
+
+  "showQrAtEntrance": "Show this QR code at the venue entrance for instant check-in",
+  "@showQrAtEntrance": { "description": "QR code instructions" },
+
+  "yourSeatAssignment": "Your Seat Assignment",
+  "@yourSeatAssignment": { "description": "Seat assignment title" },
+
+  "seat": "Seat",
+  "@seat": { "description": "Seat label" },
+
+  "section": "Section",
+  "@section": { "description": "Section label" },
+
+  "name": "Name",
+  "@name": { "description": "Name label" },
+
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": { "description": "Phone number label" },
+
+  "whatsIncluded": "What's Included",
+  "@whatsIncluded": { "description": "What's included section title" },
+
+  "eventDetails": "Event Details",
+  "@eventDetails": { "description": "Event details title" },
+
+  "editProfile": "Edit Profile",
+  "@editProfile": { "description": "Edit profile button" },
+
+  "saveChanges": "Save Changes",
+  "@saveChanges": { "description": "Save changes button" },
+
+  "cancel": "Cancel",
+  "@cancel": { "description": "Cancel button" },
+
+  "logout": "Logout",
+  "@logout": { "description": "Logout button" },
+
+  "done": "Done",
+  "@done": { "description": "Done button" },
+
+  "success": "Success",
+  "@success": { "description": "Success message title" },
+
+  "profileUpdatedSuccessfully": "Profile updated successfully",
+  "@profileUpdatedSuccessfully": { "description": "Profile update success message" },
+
+  "scanQrCode": "Scan QR Code",
+  "@scanQrCode": { "description": "Scan QR code button/title" },
+
+  "alignQrCode": "Align QR code within frame to scan",
+  "@alignQrCode": { "description": "QR scanner instruction" },
+
+  "scanAgain": "Scan Again",
+  "@scanAgain": { "description": "Scan again button" },
+
+  "invalidQrCode": "Invalid QR Code",
+  "@invalidQrCode": { "description": "Invalid QR error title" },
+
+  "noValidQrData": "No valid QR data found.",
+  "@noValidQrData": { "description": "No valid QR data message" },
+
+  "validationError": "Validation Error",
+  "@validationError": { "description": "Validation error title" },
+
+  "openInMaps": "Open in Maps",
+  "@openInMaps": { "description": "Open in maps button" },
+
+  "selectYourRole": "Select your role",
+  "@selectYourRole": { "description": "Select role dropdown hint" },
+
+  "pleaseSelectSection": "Please select your section",
+  "@pleaseSelectSection": { "description": "Section validation message" },
+
+  "enterYourPassword": "Enter your password",
+  "@enterYourPassword": { "description": "Password field hint" },
+
+  "dontHaveAccount": "Don't have an account?",
+  "@dontHaveAccount": { "description": "Don't have account label" },
+
+  "na": "N/A",
+  "@na": { "description": "Not applicable" },
+
+  "closeButton": "Close",
+  "@close": { "description": "Email not approved close button" },
+
+  "confirmed": "Confirmed",
+  "@confirmed": { "description": "Confirmed status label" },
+
+  "announcements": "Announcements",
+  "@announcements": { "description": "Announcements section title" }
+
+
+
+
+
+}

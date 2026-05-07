@@ -92,7 +92,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const AppText.h3('Create Account'),
+        title: AppText.h3(context.l10n.createAccount),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -152,18 +152,18 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                 ),
               ),
               10.verticalSpace,
-              const Center(child: AppText.bodySm('Upload your photo')),
+              Center(child: AppText.bodySm(context.l10n.uploadPhoto)),
 
               28.verticalSpace,
 
               // ─── Email ────────────────────────────────────
               AppTextField(
-                label: 'Email',
-                hint: 'ahmed@university.edu',
+                label: context.l10n.email,
+                hint: context.l10n.emailHint,
                 controller: _emailCtrl,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                helperText: '✦  Only approved university emails accepted',
+                helperText: context.l10n.emailHelperText,
                 suffixIcon: const Icon(
                   Icons.alternate_email_rounded,
                   color: AppColors.grey500,
@@ -176,8 +176,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
               // ─── Mobile ───────────────────────────────────
               AppTextField(
-                label: 'Mobile',
-                hint: '+974 5555 1234',
+                label: context.l10n.mobile,
+                hint: context.l10n.mobileHint,
                 controller: _mobileCtrl,
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
@@ -189,61 +189,6 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                 validator: Validators.phone,
               ),
 
-              // 16.verticalSpace,
-
-              // // ─── Section dropdown ─────────────────────────
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     const AppText.labelLg(
-              //       'Role',
-              //       color: AppColors.textPrimary,
-              //       fontWeight: FontWeight.w500,
-              //     ),
-              //     6.verticalSpace,
-              //     DropdownButtonFormField<String>(
-              //       value: _selectedSection,
-              //       hint: const AppText.bodyMd(
-              //         'Select your role',
-              //         color: AppColors.textgrey,
-              //       ),
-              //       decoration: InputDecoration(
-              //         filled: true,
-              //         fillColor: AppColors.white,
-              //         contentPadding: const EdgeInsets.symmetric(
-              //           horizontal: 16,
-              //           vertical: 14,
-              //         ),
-              //         border: OutlineInputBorder(
-              //           borderRadius: 12.circular,
-              //           borderSide: const BorderSide(color: AppColors.border),
-              //         ),
-              //         enabledBorder: OutlineInputBorder(
-              //           borderRadius: 12.circular,
-              //           borderSide: const BorderSide(color: AppColors.border),
-              //         ),
-              //         focusedBorder: OutlineInputBorder(
-              //           borderRadius: 12.circular,
-              //           borderSide: const BorderSide(
-              //             color: AppColors.primary,
-              //             width: 1.5,
-              //           ),
-              //         ),
-              //       ),
-              //       validator: (v) =>
-              //           v == null ? 'Please select your section' : null,
-              //       onChanged: (v) => setState(() => _selectedSection = v),
-              //       items: _sections
-              //           .map(
-              //             (s) => DropdownMenuItem(
-              //               value: s,
-              //               child: AppText.bodyMd(s),
-              //             ),
-              //           )
-              //           .toList(),
-              //     ),
-              //   ],
-              // ),
               36.verticalSpace,
 
               // ─── Continue button ──────────────────────────
@@ -253,7 +198,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                     .isLoading,
                 builder: (context, isLoading, _) {
                   return AppButton.primary(
-                    label: 'Continue to Verify',
+                    label: context.l10n.continueToVerify,
                     onPressed: _onContinue,
                     isLoading: isLoading,
                     borderRadius: 50.circular,
@@ -263,12 +208,12 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
               20.verticalSpace,
 
               // ─── Already registered ───────────────────────
-              const AppDividerWithLabel('Already Registered'),
+              AppDividerWithLabel(context.l10n.alreadyRegistered),
 
               12.verticalSpace,
 
               AppButton.ghost(
-                label: 'Sign In',
+                label: context.l10n.signIn,
                 isFullWidth: true,
                 onPressed: () => Navigator.of(context).pop(),
                 textColor: AppColors.primary,

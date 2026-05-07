@@ -107,10 +107,10 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               24.verticalSpace,
-              const AppText.h2('Check Your Email'),
+              AppText.h2(context.l10n.checkYourEmail),
               10.verticalSpace,
               AppText.bodyMd(
-                "We've sent a 6-digit code to",
+                context.l10n.weSentCodeTo,
                 color: AppColors.textSecondary,
                 textAlign: TextAlign.center,
               ),
@@ -159,8 +159,8 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                       _startTimer();
                     }
                   },
-                  child: const AppText.bodySm(
-                    'Resend Code',
+                  child: AppText.bodySm(
+                    context.l10n.resendCode,
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
                     decoration: TextDecoration.underline,
@@ -171,11 +171,11 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AppText.bodySm(
-                      'Code expires in  ',
+                      context.l10n.codeExpiresIn,
                       color: AppColors.textSecondary,
                     ),
                     AppText.bodySm(
-                      '0:${_secondsLeft.toString().padLeft(2, '0')}',
+                      '${_secondsLeft.toString().padLeft(2, '0')} sec',
                       color: _secondsLeft > 0
                           ? AppColors.primary
                           : AppColors.error,
@@ -193,7 +193,7 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                     .isLoading,
                 builder: (context, isLoading, _) {
                   return AppButton.primary(
-                    label: 'Verify & Continue',
+                    label: context.l10n.verifyAndContinue,
                     onPressed: _otp.length == 6 ? _onVerify : null,
                     isLoading: isLoading,
                     borderRadius: 50.circular,

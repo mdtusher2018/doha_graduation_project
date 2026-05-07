@@ -12,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   cupertino_icons: ^1.0.8
   image_picker: ^1.2.1
   qr_flutter: ^4.1.0
@@ -32,10 +35,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
   flutter_lints: ^6.0.0
   build_runner: ^2.14.1
   riverpod_generator: ^4.0.3
   package_rename: ^1.10.1
+
 
 package_rename_config:
   android:
@@ -43,8 +48,8 @@ package_rename_config:
     package_name: "app.doha_graduation.com"
 
 flutter:
-
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/images/

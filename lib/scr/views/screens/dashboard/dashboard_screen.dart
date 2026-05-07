@@ -162,7 +162,7 @@ class _SliverHeader extends ConsumerWidget {
                               ),
                               8.verticalSpace,
                               AppText.bodyLg(
-                                'Welcome ${user.name}',
+                                context.l10n.welcomeUser(user.name),
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -176,7 +176,7 @@ class _SliverHeader extends ConsumerWidget {
                                 height: 30,
                                 width: 140,
                                 child: AppButton.outline(
-                                  label: "Logout",
+                                  label: context.l10n.logout,
                                   onPressed: () async {
                                     await ref
                                         .read(localStorageProvider)
@@ -227,7 +227,9 @@ class _SliverHeader extends ConsumerWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 AppText.labelSm(
-                                  'Welcome ${user.name.split(' ').first}',
+                                  context.l10n.welcomeUser(
+                                    user.name.split(' ').first,
+                                  ),
                                   color: AppColors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -322,9 +324,9 @@ class _SliverHeader extends ConsumerWidget {
 
                           12.horizontalSpace,
 
-                          const Expanded(
+                          Expanded(
                             child: AppText.h4(
-                              "Edit Profile",
+                              context.l10n.editProfile,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -392,7 +394,7 @@ class _SliverHeader extends ConsumerWidget {
                       AppTextField(
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
-                        label: "Phone Number",
+                        label: context.l10n.phoneNumber,
                       ),
 
                       28.verticalSpace,
@@ -402,7 +404,7 @@ class _SliverHeader extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: AppButton.outline(
-                              label: "Cancel",
+                              label: context.l10n.cancel,
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -419,7 +421,7 @@ class _SliverHeader extends ConsumerWidget {
                                   .isLoading,
                               builder: (context, isLoading, child) {
                                 return AppButton(
-                                  label: "Save Changes",
+                                  label: context.l10n.saveChanges,
                                   borderRadius: 14.circular,
                                   isLoading: isLoading,
                                   onPressed: () async {
@@ -439,8 +441,10 @@ class _SliverHeader extends ConsumerWidget {
                                     if (context.mounted) {
                                       Navigator.pop(context);
                                       context.showCommonSnackbar(
-                                        title: "Success",
-                                        message: "Profile updated successfully",
+                                        title: context.l10n.success,
+                                        message: context
+                                            .l10n
+                                            .profileUpdatedSuccessfully,
                                       );
                                       ref
                                           .read(
@@ -479,8 +483,8 @@ class _SeatCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const AppText.labelLg(
-            'Your Seat Assignment',
+          AppText.labelLg(
+            context.l10n.yourSeatAssignment,
 
             fontWeight: FontWeight.w500,
           ),
@@ -509,8 +513,8 @@ class _SeatCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.done, color: AppColors.white, size: 16),
                   6.horizontalSpace,
-                  const AppText.bodySm(
-                    'Confirmed',
+                  AppText.bodySm(
+                    context.l10n.confirmed,
                     color: AppColors.white,
                     fontWeight: FontWeight.w600,
                   ),
@@ -565,7 +569,7 @@ class _QrCard extends StatelessWidget {
                 ),
               ),
               12.horizontalSpace,
-              const AppText.h4('Your QR Code'),
+              AppText.h4(context.l10n.yourQrCode),
             ],
           ),
           20.verticalSpace,
@@ -579,9 +583,9 @@ class _QrCard extends StatelessWidget {
           ),
 
           16.verticalSpace,
-          const Center(
+          Center(
             child: AppText.bodySm(
-              'Show this QR code at the venue entrance for instant check-in',
+              context.l10n.showQrAtEntrance,
               color: AppColors.textSecondary,
               textAlign: TextAlign.center,
             ),
@@ -607,14 +611,14 @@ class _EventDetailsCard extends StatelessWidget {
     }
   }
 
-  String formatDate(DateTime? date) {
-    if (date == null) return "N/A";
+  String formatDate(DateTime? date, BuildContext context) {
+    if (date == null) return context.l10n.na;
 
     return DateFormat('EEEE, MMM d, yyyy').format(date.toLocal());
   }
 
-  String formatTimeRange(DateTime? start, DateTime? end) {
-    if (start == null || end == null) return "N/A";
+  String formatTimeRange(DateTime? start, DateTime? end, BuildContext context) {
+    if (start == null || end == null) return context.l10n.na;
 
     final startFormatted = DateFormat('hh:mm a').format(start.toLocal());
     final endFormatted = DateFormat('hh:mm a').format(end.toLocal());
@@ -644,7 +648,7 @@ class _EventDetailsCard extends StatelessWidget {
                 ),
               ),
               12.horizontalSpace,
-              const AppText.h4('Event Details'),
+              AppText.h4(context.l10n.eventDetails),
             ],
           ),
 
@@ -659,7 +663,7 @@ class _EventDetailsCard extends StatelessWidget {
               children: [
                 AppText.h4(event.name, fontWeight: FontWeight.w600),
                 AppText.bodySm(
-                  event.location?.venue ?? "N/A",
+                  event.location?.venue ?? context.l10n.na,
                   color: AppColors.textSecondary,
                 ),
               ],
@@ -676,7 +680,7 @@ class _EventDetailsCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText.bodyMd(
-                  event.location?.address ?? "N/A",
+                  event.location?.address ?? context.l10n.na,
                   fontWeight: FontWeight.w500,
                 ),
 
@@ -691,7 +695,7 @@ class _EventDetailsCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       AppText.bodySm(
-                        'Open in Maps',
+                        context.l10n.openInMaps,
                         color: AppColors.primary,
                         fontWeight: FontWeight.w600,
                       ),
@@ -718,11 +722,11 @@ class _EventDetailsCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText.labelMd(
-                  formatDate(event.date),
+                  formatDate(event.date, context),
                   fontWeight: FontWeight.w600,
                 ),
                 AppText.labelMd(
-                  formatTimeRange(event.startTime, event.endTime),
+                  formatTimeRange(event.startTime, event.endTime, context),
                 ),
               ],
             ),
@@ -793,7 +797,7 @@ class _AnnouncementsCard extends StatelessWidget {
                   ),
                 ),
                 12.horizontalSpace,
-                const AppText.h4('Announcements'),
+                AppText.h4(context.l10n.announcements),
               ],
             ),
           ),
@@ -878,7 +882,7 @@ class _WhatsIncludedCard extends StatelessWidget {
                 ),
               ),
               12.horizontalSpace,
-              const AppText.h4("What's Included"),
+              AppText.h4(context.l10n.whatsIncluded),
             ],
           ),
           20.verticalSpace,
@@ -980,7 +984,7 @@ class _InstructionsCard extends StatelessWidget {
                 ),
               ),
               12.horizontalSpace,
-              const AppText.h4('Important Instructions'),
+              AppText.h4(context.l10n.importantInstructions),
             ],
           ),
           20.verticalSpace,

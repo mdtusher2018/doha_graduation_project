@@ -18,20 +18,6 @@ class RoleSelectionScreen extends StatefulWidget {
 class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
   String? _selectedRole;
 
-  final List<_RoleItem> roles = const [
-    _RoleItem(
-      title: "Student/Faculty",
-      subtitle: "Easily access your academic or faculty dashboard",
-      icon: Icons.school_rounded,
-    ),
-
-    _RoleItem(
-      title: "Staff",
-      subtitle: "Administrative access",
-      icon: Icons.apartment_rounded,
-    ),
-  ];
-
   void _onContinue() {
     if (_selectedRole == null) {
       context.showCommonSnackbar(
@@ -41,7 +27,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
       return;
     }
     ;
-    if (_selectedRole == "Staff") {
+    if (_selectedRole == "staff") {
       context.navigateTo(StaffSignInScreen(), clearStack: true);
     } else {
       context.navigateTo(SignInScreen(), clearStack: true);
@@ -50,6 +36,21 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<_RoleItem> roles = [
+      _RoleItem(
+        title: context.l10n.studentFaculty,
+        value: "user",
+        subtitle: context.l10n.easilyAccessDashboard,
+        icon: Icons.school_rounded,
+      ),
+
+      _RoleItem(
+        title: context.l10n.staff,
+        value: "staff",
+        subtitle: context.l10n.administrativeAccess,
+        icon: Icons.apartment_rounded,
+      ),
+    ];
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -61,10 +62,10 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               40.verticalSpace,
 
               // ─── Header ─────────────────────────────
-              AppText.h1("Choose Your Role"),
+              AppText.h1(context.l10n.chooseYourRole),
 
               8.verticalSpace,
-              AppText.bodyLg("Select how you want to use the platform"),
+              AppText.bodyLg(context.l10n.selectRoleSubtitle),
 
               32.verticalSpace,
 
@@ -76,12 +77,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   separatorBuilder: (_, __) => 16.verticalSpace,
                   itemBuilder: (context, index) {
                     final role = roles[index];
-                    final isSelected = _selectedRole == role.title;
+                    final isSelected = _selectedRole == role.value;
 
                     return GestureDetector(
                       onTap: () {
                         setState(() {
-                          _selectedRole = role.title;
+                          _selectedRole = role.value;
                         });
                       },
                       child: AnimatedContainer(
@@ -162,7 +163,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               // ─── Continue Button ─────────────────────
               SafeArea(
                 child: AppButton.primary(
-                  label: "Continue",
+                  label: context.l10n.continueButton,
                   onPressed: _onContinue,
                 ),
               ),
@@ -178,11 +179,13 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 class _RoleItem {
   final String title;
   final String subtitle;
+  final String value;
   final IconData icon;
 
   const _RoleItem({
     required this.title,
     required this.subtitle,
+    required this.value,
     required this.icon,
   });
 }

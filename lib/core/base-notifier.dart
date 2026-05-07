@@ -32,7 +32,7 @@ abstract class BaseNotifier<T> extends StateNotifier<T> {
         final context = navigatorKey.currentContext;
         if (context != null) {
           context.showCommonSnackbar(
-            title: "Success",
+            title: context.l10n.success,
             message: successMessage,
             backgroundColor: AppColors.success,
           );
